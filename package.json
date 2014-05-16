@@ -1,0 +1,36 @@
+{
+  "name": "karma-es6-module-preprocessor",
+  "version": "0.0.0",
+  "description": "Preprocessor to compile ES6 Module formats using the es6-module-transpiler",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Attamusc/karma-es6-module-preprocessor.git"
+  },
+  "keywords": [
+    "karma-plugin",
+    "karma-preprocessor",
+    "es6-module-transpiler"
+  ],
+  "author": "Sean Dunn <sean@attamusc.com> (http://www.dunns.me/)",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/Attamusc/karma-es6-module-preprocessor/issues"
+  },
+  "homepage": "https://github.com/Attamusc/karma-es6-module-preprocessor",
+  "dependencies": {
+    "es6-module-transpiler": "^0.4.0"
+  },
+  "peerDependencies": {
+    "karma": ">=0.11.14"
+  },
+  "devDependencies": {
+    "grunt": "^0.4.5",
+    "grunt-auto-release": "0.0.6",
+    "grunt-bump": "0.0.13",
+    "grunt-npm": "0.0.2"
+  }
+}
