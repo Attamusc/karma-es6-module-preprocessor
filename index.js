@@ -1,8 +1,9 @@
-// Hack around a bug in the version of Traceur used so that the polyfill doesn't happen.
-var defineProperty = Object.defineProperty;
-var Compiler = require('es6-module-transpiler').Compiler;
-
-Object.defineProperty = defineProperty;
+var recast = require('recast');
+var path = require('path');
+var transpiler = require('es6-module-transpiler');
+var AMDFormatter = require('es6-module-transpiler-amd-formatter');
+var Container = transpiler.Container;
+var FileResolver = transpiler.FileResolver;
 
 var createModuleTranspilerPreprocessor = function(args, config, logger, helper) {
   config = config || {};
@@ -17,10 +18,18 @@ var createModuleTranspilerPreprocessor = function(args, config, logger, helper) 
 
   return function(content, file, done) {
     log.debug('Processing "%s".', file.originalPath);
-    var filename = file.originalPath.replace(/\.js$/, '');
 
-    var compiler = new Compiler(content, null, options);
-    var transpiledContent = compiler.toAMD();
+    var moduleName = file.originalPath.split(path.join(process.cwd(), '/'))[1];
+
+    var container = new Container({
+      resolvers: [new FileResolver([process.cwd()])],
+      formatter: new AMDFormatter()
+    });
+
+    container.getModule(moduleName);
+
+    var transpiledASTs = container.convert();
+    var transpiledContent = recast.print(transpiledASTs[0]).code;
 
     return done(null, transpiledContent);
   };
