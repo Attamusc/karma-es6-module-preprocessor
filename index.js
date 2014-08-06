@@ -1,9 +1,16 @@
+var defineProperty = Object.defineProperty;
 var recast = require('recast');
 var path = require('path');
 var transpiler = require('es6-module-transpiler');
 var AMDFormatter = require('es6-module-transpiler-amd-formatter');
 var Container = transpiler.Container;
 var FileResolver = transpiler.FileResolver;
+
+// Monkeypatch defineProperty to have proper behavior in certain environments
+Object.defineProperty = function (obj, name, config) {
+    defineProperty(obj, name, config);
+    return obj;
+};
 
 var createModuleTranspilerPreprocessor = function(args, config, logger, helper) {
   config = config || {};
